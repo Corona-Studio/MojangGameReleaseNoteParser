@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "lib": ["es2016", "esnext"],
+    "sourceMap": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "outDir": "build",
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/**/**/types/"
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
