@@ -29,6 +29,7 @@ async function checkLoop(): Promise<void> {
             if(node.hasChildNodes() && nodeType !== "#text"){
                 let leadingTag = "";
                 let endingTag = "";
+
                 switch (nodeType) {
                     case "P":
                         leadingTag = `<TextBlock Padding="0,5" TextWrapping="Wrap" FontSize="{DynamicResource LauncherX.FontSize.NormalText}">`;
@@ -45,13 +46,14 @@ async function checkLoop(): Promise<void> {
                         leadingTag = `<LineBreak/><TextBlock Padding="0,10" TextWrapping="Wrap" FontSize="{DynamicResource LauncherX.FontSize.Title.Secondary}">`;
                         endingTag = "</TextBlock>";
                         break;
+                    case "OL":
                     case "UL":
                         leadingTag = "<List>";
                         endingTag = "</List>";
                         break;
                     case "LI":
-                        leadingTag = "<ListItem><Paragraph>";
-                        endingTag = "</Paragraph></ListItem>";
+                        leadingTag = "<ListItem>";
+                        endingTag = "</ListItem>";
                         break;
                     case "A":
                         const hrefContent =  (node as Element).getAttribute("href");
@@ -63,14 +65,45 @@ async function checkLoop(): Promise<void> {
                                             "</b:EventTrigger>" +
                                         "</b:Interaction.Triggers>";
                         endingTag = "</Hyperlink>";
+                        break;
+                    case "CODE":
+                        leadingTag = `<TextBlock FontWeight="Bold" FontStyle="Italic">`;
+                        endingTag = "</TextBlock>";
+                        break;
+                    case "STRONG":
+                        leadingTag = `<TextBlock FontWeight="Bold">`;
+                        endingTag = "</TextBlock>";
+                        break;
+                    case "PRE":
+                        leadingTag = `<TextBlock TextDecorations="Underline">`;
+                        endingTag = "</TextBlock>";
+                        break;
+                    case "COLOUR":
+                        leadingTag = `&lt;colour&gt;`;
+                        break;
                 }
 
                 rB += leadingTag;
 
+                let flag = false;
                 for(let nI = 0; nI < node.childNodes.length; nI++){
                     const childNodeType = node.childNodes[nI].nodeName;
+
+                    if(["OL", "UL", "P", "H1", "H2", "H3", "H4", "H5", "A", "CODE", "STRONG", "PRE", "COLOUR"].indexOf(nodeType) === -1 && !flag){
+                        flag = true;
+                        rB += "<Paragraph>";
+                    }
+
+                    if((childNodeType === "UL" || childNodeType === "OL") && flag){
+                        flag = false;
+                        rB += "</Paragraph>";
+                    }
+
                     rB = resolveNode(rB, node.childNodes[nI], childNodeType);
                 }
+
+                if(flag)
+                    rB += "</Paragraph>";
 
                 rB += endingTag;
             }
@@ -87,8 +120,7 @@ async function checkLoop(): Promise<void> {
                         break;
                     case "#text":
                         if(value !== "\n")
-                            rB += value;
-                        break;
+                            rB += value.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<LineBreak/>");
                 }
             }
 
@@ -105,17 +137,18 @@ async function checkLoop(): Promise<void> {
                                     `xmlns:b="http://schemas.microsoft.com/xaml/behaviors" ` +
                                     `xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" ` +
                                     `Foreground="{DynamicResource LauncherX.Foreground.Primary}">`;
+
             let flag = false;
             for(let i = 0; i < bodyTag.childNodes.length; i++){
                 const childNode = bodyTag.childNodes[i];
                 const nodeType = childNode.nodeName;
 
-                if(!flag && nodeType != "UL"){
+                if(!flag && nodeType !== "UL" && nodeType !== "OL"){
                     flag = true;
                     resolvedBody += "<Paragraph>";
                 }
 
-                if(nodeType === "UL"){
+                if(nodeType === "UL" || nodeType === "OL"){
                     resolvedBody += "</Paragraph>";
                     flag = false;
                 }
