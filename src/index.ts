@@ -81,6 +81,10 @@ async function checkLoop(): Promise<void> {
                     case "COLOUR":
                         leadingTag = `&lt;colour&gt;`;
                         break;
+                    case "EM":
+                        leadingTag = `<TextBlock FontWeight="Bold" Foreground="{DynamicResource LauncherX.AccentColor.Lighter}">`;
+                        endingTag = "</TextBlock>";
+                        break;
                 }
 
                 rB += leadingTag;
@@ -89,7 +93,10 @@ async function checkLoop(): Promise<void> {
                 for(let nI = 0; nI < node.childNodes.length; nI++){
                     const childNodeType = node.childNodes[nI].nodeName;
 
-                    if(["OL", "UL", "P", "H1", "H2", "H3", "H4", "H5", "A", "CODE", "STRONG", "PRE", "COLOUR"].indexOf(nodeType) === -1 && !flag){
+                    if(["OL", "UL", "P", "H1",
+                        "H2", "H3", "H4", "H5",
+                        "A", "CODE", "STRONG", "PRE",
+                        "COLOUR", "EM"].indexOf(nodeType) === -1 && !flag){
                         flag = true;
                         rB += "<Paragraph>";
                     }
