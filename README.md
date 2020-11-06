@@ -1,6 +1,6 @@
 # MojangGameReleaseNoteParser
 
-A small program used to get release noes from mojang server. And convert it to the flowdocument.
+A small program used to get release notes from Mojang server. And convert it to the flow document.
 
 # How To Use
 
