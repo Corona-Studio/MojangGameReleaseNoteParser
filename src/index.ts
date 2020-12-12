@@ -78,12 +78,34 @@ async function checkLoop(): Promise<void> {
                         leadingTag = `<TextBlock TextDecorations="Underline">`;
                         endingTag = "</TextBlock>";
                         break;
+                    case "COLOR":
                     case "COLOUR":
                         leadingTag = `&lt;colour&gt;`;
                         break;
                     case "EM":
                         leadingTag = `<TextBlock FontWeight="Bold" Foreground="{DynamicResource LauncherX.AccentColor.Lighter}">`;
                         endingTag = "</TextBlock>";
+                        break;
+                    case "TABLE":
+                        leadingTag = "<Table>";
+                        endingTag = "</Table>";
+                        break;
+                    case "TH":
+                        leadingTag = `<TableCell FontWeight="Bold" FontSize="{DynamicResource LauncherX.FontSize.Title}">`;
+                        endingTag = "</TableCell>";
+                        break;
+                    case "TR":
+                        leadingTag = "<TableRow>";
+                        endingTag = "</TableRow>";
+                        break;
+                    case "THEAD":
+                    case "TBODY":
+                        leadingTag = `<TableRowGroup>`;
+                        endingTag = `</TableRowGroup>`;
+                        break;
+                    case "TD":
+                        leadingTag = `<TableCell>`;
+                        endingTag = "</TableCell>";
                         break;
                 }
 
@@ -96,12 +118,13 @@ async function checkLoop(): Promise<void> {
                     if(["OL", "UL", "P", "H1",
                         "H2", "H3", "H4", "H5",
                         "A", "CODE", "STRONG", "PRE",
-                        "COLOUR", "EM"].indexOf(nodeType) === -1 && !flag){
+                        "COLOUR", "COLOR", "EM", "TABLE", "TR",
+                        "THEAD", "TBODY"].indexOf(nodeType) === -1 && !flag){
                         flag = true;
                         rB += "<Paragraph>";
                     }
 
-                    if((childNodeType === "UL" || childNodeType === "OL") && flag){
+                    if((childNodeType === "UL" || childNodeType === "OL" || childNodeType === "TABLE") && flag){
                         flag = false;
                         rB += "</Paragraph>";
                     }
@@ -150,12 +173,12 @@ async function checkLoop(): Promise<void> {
                 const childNode = bodyTag.childNodes[i];
                 const nodeType = childNode.nodeName;
 
-                if(!flag && nodeType !== "UL" && nodeType !== "OL"){
+                if(!flag && nodeType !== "UL" && nodeType !== "OL" && nodeType !== "TABLE"){
                     flag = true;
                     resolvedBody += "<Paragraph>";
                 }
 
-                if(nodeType === "UL" || nodeType === "OL"){
+                if(nodeType === "UL" || nodeType === "OL" || nodeType === "TABLE"){
                     resolvedBody += "</Paragraph>";
                     flag = false;
                 }
