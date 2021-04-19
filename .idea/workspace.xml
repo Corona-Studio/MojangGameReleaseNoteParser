@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec689aef-b7f2-4806-bb46-6c8c23ed0a40" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/helper/htmlHelper.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/controllers/resolve.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +25,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1jP9d2VVzbRERUIKvzhHf9a5Qde" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -82,6 +95,9 @@
       <workItem from="1607089691764" duration="3930000" />
       <workItem from="1607687587123" duration="1053000" />
       <workItem from="1607752419027" duration="741000" />
+      <workItem from="1615530437627" duration="1089000" />
+      <workItem from="1618716341635" duration="1537000" />
+      <workItem from="1618816385487" duration="2795000" />
     </task>
     <servers />
   </component>
