@@ -1,4 +1,4 @@
-# MojangGameReleaseNoteParser
+# MojangGameReleaseNoteParser [obsolete]
 
 A small program used to get release notes from Mojang server. And convert it to the flow document.
 
